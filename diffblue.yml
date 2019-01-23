@@ -1,0 +1,61 @@
+# Tested on Deeptest release 1.10.0
+cbmcArguments:
+  cover-function-only: false
+  depth: false
+  do-not-test-methods-with-access: [ private ]
+  java-generate-no-comments: true
+phases:
+-
+  timeout: 300
+  cbmcArguments:
+    java-assume-inputs-non-null: true
+    max-nondet-array-length: 10
+    string-non-empty: true
+    unwind: 1
+-
+  timeout: 300
+  cbmcArguments:
+    max-nondet-array-length: 20
+    unwind: 2
+-
+  timeout: 300
+  cbmcArguments:
+    max-nondet-array-length: 30
+    max-nondet-string-length: 10
+    unwind: 3
+units:
+  - target:
+    - dir: awaitility/target/classes
+      file: org/awaitility/core/LambdaErrorMessageGenerator.class
+      sourceDir: awaitility/src/main/java
+      sourceFile: org/awaitility/core/LambdaErrorMessageGenerator.java
+  - target:
+    - dir: awaitility/target/classes
+      file: org/awaitility/core/CallableCondition.class
+      sourceDir: awaitility/src/main/java
+      sourceFile: org/awaitility/core/CallableCondition.java
+    # Child of CallableCondition.class
+    - dir: awaitility/target/classes
+      file: org/awaitility/Duration.class
+      sourceDir: awaitility/src/main/java
+      sourceFile: org/awaitility/Duration.java
+  - target:
+    - dir: awaitility/target/classes
+      file: org/awaitility/core/ConditionAwaiter.class
+      sourceDir: awaitility/src/main/java
+      sourceFile: org/awaitility/core/ConditionAwaiter.java
+  - target:
+    - dir: awaitility-test-support/target/classes
+      file: org/awaitility/classes/ExceptionThrowingAsynch.class
+      sourceDir: awaitility-test-support/src/main/java
+      sourceFile: org/awaitility/classes/ExceptionThrowingAsynch.java
+  - target:
+    - dir: awaitility-proxy/target/classes
+      file: org/awaitility/proxy/internal/ByteBuddyProxyCreator.class
+      sourceDir: awaitility-proxy/src/main/java
+      sourceFile: org/awaitility/proxy/internal/ByteBuddyProxyCreator.java
+    # Child of ByteBuddyProxyCreator.class
+    - dir: awaitility-proxy/target/classes
+      file: org/awaitility/proxy/CannotCreateProxyException.class
+      sourceDir: awaitility-proxy/src/main/java
+      sourceFile: org/awaitility/proxy/CannotCreateProxyException.java
